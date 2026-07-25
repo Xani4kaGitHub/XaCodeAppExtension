@@ -199,7 +199,17 @@
         const rect = el.getBoundingClientRect();
         createRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-        el.click();
+        el.focus();
+        const events = ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'];
+        for (const ev of events) {
+          el.dispatchEvent(new MouseEvent(ev, {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+            buttons: 1
+          }));
+        }
+
         await new Promise((r) => setTimeout(r, 300));
         removeCursor();
         return { success: true };
