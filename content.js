@@ -190,7 +190,7 @@
         if (!el) return { success: false, error: `Элемент '${params.selector}' не найден` };
 
         showBanner(`⚡ XaCode ИИ: Клик по '${params.selector}'`, '#a78bfa');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.scrollIntoView({ behavior: document.visibilityState === 'hidden' ? 'auto' : 'smooth', block: 'center' });
         await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);
@@ -209,6 +209,7 @@
             buttons: 1
           }));
         }
+        try { el.click(); } catch (e) {}
 
         await new Promise((r) => setTimeout(r, 50));
         removeCursor();
@@ -219,14 +220,23 @@
         if (!el) return { success: false, error: `Элемент '${params.selector}' не найден` };
 
         showBanner(`⚡ XaCode ИИ: Ввод текста в '${params.selector}'`, '#3b82f6');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.scrollIntoView({ behavior: document.visibilityState === 'hidden' ? 'auto' : 'smooth', block: 'center' });
         await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);
         await new Promise((r) => setTimeout(r, 100));
 
         el.focus();
-        el.value = params.text;
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+        const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value')?.set;
+        if (el.tagName === 'TEXTAREA' && nativeTextAreaValueSetter) {
+            nativeTextAreaValueSetter.call(el, params.text);
+        } else if (el.tagName === 'INPUT' && nativeInputValueSetter) {
+            nativeInputValueSetter.call(el, params.text);
+        } else {
+            el.value = params.text;
+        }
+        
         el.dispatchEvent(new Event('input', { bubbles: true }));
         el.dispatchEvent(new Event('change', { bubbles: true }));
 
@@ -239,7 +249,7 @@
         if (!el) return { success: false, error: `Элемент '${params.selector}' не найден` };
 
         showBanner(`⚡ XaCode ИИ: Анализ элемента '${params.selector}'`, '#8b5cf6');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.scrollIntoView({ behavior: document.visibilityState === 'hidden' ? 'auto' : 'smooth', block: 'center' });
         await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);

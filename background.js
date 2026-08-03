@@ -165,7 +165,6 @@ async function handleAgentCommand(commandId, action, params = {}) {
       case 'scroll': {
         const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (!activeTab) return { success: false, error: 'Нет активной вкладки' };
-        if (activeTab.windowId) await chrome.windows.update(activeTab.windowId, { focused: true }).catch(() => {});
         const res = await chrome.tabs.sendMessage(activeTab.id, { type: 'VISUAL_ACTION', action: 'scroll', params });
         return res || { success: true };
       }
@@ -173,7 +172,6 @@ async function handleAgentCommand(commandId, action, params = {}) {
       case 'click': {
         const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (!activeTab) return { success: false, error: 'Нет активной вкладки' };
-        if (activeTab.windowId) await chrome.windows.update(activeTab.windowId, { focused: true }).catch(() => {});
         const res = await chrome.tabs.sendMessage(activeTab.id, { type: 'VISUAL_ACTION', action: 'click', params });
         return res || { success: true };
       }
@@ -181,7 +179,6 @@ async function handleAgentCommand(commandId, action, params = {}) {
       case 'type': {
         const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (!activeTab) return { success: false, error: 'Нет активной вкладки' };
-        if (activeTab.windowId) await chrome.windows.update(activeTab.windowId, { focused: true }).catch(() => {});
         const res = await chrome.tabs.sendMessage(activeTab.id, { type: 'VISUAL_ACTION', action: 'type', params });
         return res || { success: true };
       }
@@ -189,7 +186,6 @@ async function handleAgentCommand(commandId, action, params = {}) {
       case 'highlight': {
         const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (!activeTab) return { success: false, error: 'Нет активной вкладки' };
-        if (activeTab.windowId) await chrome.windows.update(activeTab.windowId, { focused: true }).catch(() => {});
         const res = await chrome.tabs.sendMessage(activeTab.id, { type: 'VISUAL_ACTION', action: 'highlight', params });
         return res || { success: true };
       }
