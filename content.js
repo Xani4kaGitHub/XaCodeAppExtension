@@ -182,7 +182,7 @@
         const direction = params.direction === 'up' ? -1 : 1;
         showBanner(`⚡ XaCode ИИ: Прокрутка страницы ${params.direction === 'up' ? '⬆' : '⬇'}`, '#6366f1');
         window.scrollBy({ top: amount * direction, behavior: 'smooth' });
-        await new Promise((r) => setTimeout(r, 600));
+        await new Promise((r) => setTimeout(r, 150));
         return { success: true };
       }
       case 'click': {
@@ -191,10 +191,10 @@
 
         showBanner(`⚡ XaCode ИИ: Клик по '${params.selector}'`, '#a78bfa');
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);
-        await new Promise((r) => setTimeout(r, 450));
+        await new Promise((r) => setTimeout(r, 100));
 
         const rect = el.getBoundingClientRect();
         createRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
@@ -210,7 +210,7 @@
           }));
         }
 
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 50));
         removeCursor();
         return { success: true };
       }
@@ -220,17 +220,17 @@
 
         showBanner(`⚡ XaCode ИИ: Ввод текста в '${params.selector}'`, '#3b82f6');
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);
-        await new Promise((r) => setTimeout(r, 400));
+        await new Promise((r) => setTimeout(r, 100));
 
         el.focus();
         el.value = params.text;
         el.dispatchEvent(new Event('input', { bubbles: true }));
         el.dispatchEvent(new Event('change', { bubbles: true }));
 
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 50));
         removeCursor();
         return { success: true };
       }
@@ -240,10 +240,10 @@
 
         showBanner(`⚡ XaCode ИИ: Анализ элемента '${params.selector}'`, '#8b5cf6');
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 50));
 
         moveCursorToElement(el);
-        await new Promise((r) => setTimeout(r, 1000));
+        await new Promise((r) => setTimeout(r, 200));
         removeCursor();
         return { success: true };
       }

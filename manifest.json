@@ -13,7 +13,8 @@
     "activeTab",
     "scripting",
     "storage",
-    "alarms"
+    "alarms",
+    "background"
   ],
   "host_permissions": [
     "<all_urls>"

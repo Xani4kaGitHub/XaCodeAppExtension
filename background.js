@@ -107,7 +107,7 @@ async function handleAgentCommand(commandId, action, params = {}) {
           targetTabId = newTab.id;
         }
         if (targetTabId) {
-          setTimeout(() => sendVisualBannerToTab(targetTabId, 'navigated', { url: params.url }), 800);
+          setTimeout(() => sendVisualBannerToTab(targetTabId, 'navigated', { url: params.url }), 100);
         }
         return { success: true, data: { tabId: targetTabId, url: params.url } };
       }
@@ -132,7 +132,7 @@ async function handleAgentCommand(commandId, action, params = {}) {
       case 'new_tab': {
         const url = params.url || 'chrome://newtab';
         const newTab = await chrome.tabs.create({ url, active: true });
-        setTimeout(() => sendVisualBannerToTab(newTab.id, 'navigated', { url }), 600);
+        setTimeout(() => sendVisualBannerToTab(newTab.id, 'navigated', { url }), 100);
         return { success: true, data: { tabId: newTab.id, url: newTab.url } };
       }
 
